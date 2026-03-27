@@ -1,0 +1,17 @@
+{
+  "name": "beason-bot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Telegram + Paystack + Supabase license delivery automation for BEASON CBT.",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "check": "node -e \"require('./lib/config').getConfig(); console.log('Config module loaded successfully.')\""
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.8"
+  }
+}
