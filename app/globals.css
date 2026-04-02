@@ -1,0 +1,262 @@
+:root {
+  color-scheme: light;
+  --bg: #f5f0e8;
+  --surface: rgba(255, 255, 255, 0.88);
+  --surface-strong: #ffffff;
+  --ink: #1f1a17;
+  --muted: #64574c;
+  --accent: #0f766e;
+  --accent-soft: #d2f5ef;
+  --danger: #b42318;
+  --warning: #b54708;
+  --border: rgba(66, 47, 35, 0.12);
+  --shadow: 0 18px 50px rgba(31, 26, 23, 0.08);
+  --radius: 20px;
+  --font-body: Georgia, "Times New Roman", serif;
+  --font-display: "Trebuchet MS", "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(circle at top right, rgba(15, 118, 110, 0.15), transparent 32%),
+    radial-gradient(circle at left 20%, rgba(255, 193, 7, 0.12), transparent 30%),
+    linear-gradient(180deg, #faf7f2 0%, #f0e6d9 100%);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.shell {
+  min-height: 100vh;
+  padding: 32px;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+}
+
+.login-shell {
+  display: grid;
+  place-items: center;
+}
+
+.login-card {
+  width: min(440px, 100%);
+  padding: 32px;
+}
+
+.display-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 1;
+  margin: 0 0 12px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.login-form,
+.stack {
+  display: grid;
+  gap: 16px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.field input,
+.filters input,
+.filters select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.button,
+.button-secondary,
+.button-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  padding: 12px 18px;
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.button {
+  background: var(--accent);
+  color: white;
+}
+
+.button-secondary {
+  background: #efe5d6;
+  color: var(--ink);
+}
+
+.button-danger {
+  background: #fee4e2;
+  color: var(--danger);
+}
+
+.dashboard-shell {
+  display: grid;
+  gap: 24px;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 28px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  padding: 20px;
+}
+
+.card-value {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  margin: 8px 0 0;
+}
+
+.grid-two {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 24px;
+}
+
+.section {
+  padding: 24px;
+}
+
+.section h2 {
+  margin-top: 0;
+  font-family: var(--font-display);
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  background: #f1ece4;
+}
+
+.badge.approved,
+.badge.active,
+.badge.standard {
+  background: #d2f5ef;
+  color: #065f58;
+}
+
+.badge.pending,
+.badge.temp,
+.badge.unused {
+  background: #fff0c2;
+  color: #8a4b00;
+}
+
+.badge.rejected,
+.badge.revoked,
+.badge.suspended,
+.badge.expired {
+  background: #fee4e2;
+  color: #912018;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.inline-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.helper-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 960px) {
+  .shell {
+    padding: 18px;
+  }
+
+  .grid-two,
+  .helper-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
