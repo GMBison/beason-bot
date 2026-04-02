@@ -34,7 +34,7 @@ export async function getDashboardOverview() {
 }
 
 async function countRows(table: string, filters?: Record<string, string>) {
-  let query = supabaseAdmin.from(table).select("*", { count: "exact", head: true });
+  let query = supabaseAdmin.from(table).select("id", { count: "exact" }).limit(1);
 
   for (const [column, value] of Object.entries(filters ?? {})) {
     query = query.eq(column, value);
