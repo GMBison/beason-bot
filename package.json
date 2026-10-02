@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit -p tsconfig.typecheck.json"
+    "typecheck": "tsc --noEmit -p tsconfig.typecheck.json",
+    "import:gsm": "node scripts/import-gsm.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
@@ -25,5 +26,9 @@
     "eslint": "^9.34.0",
     "eslint-config-next": "^15.2.4",
     "typescript": "^5.9.2"
+  },
+  "allowScripts": {
+    "sharp@0.34.5": true,
+    "unrs-resolver@1.11.1": true
   }
 }

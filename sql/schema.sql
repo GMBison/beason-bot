@@ -91,6 +91,31 @@ create table if not exists public.bot_sessions (
   updated_at timestamptz not null default timezone('utc', now())
 );
 
+create table if not exists public.question_subjects (
+  id uuid primary key default gen_random_uuid(),
+  code text not null unique,
+  slug text not null unique,
+  display_name text not null,
+  description text,
+  created_at timestamptz not null default timezone('utc', now()),
+  updated_at timestamptz not null default timezone('utc', now())
+);
+
+create table if not exists public.question_bank_entries (
+  id uuid primary key default gen_random_uuid(),
+  subject_id uuid not null references public.question_subjects(id) on delete cascade,
+  exam_year integer,
+  page_number integer,
+  question_number text,
+  title text,
+  question_text text not null,
+  answer_notes text,
+  source_url text,
+  source_payload jsonb not null default '{}'::jsonb,
+  created_at timestamptz not null default timezone('utc', now()),
+  unique (subject_id, exam_year, page_number, source_url)
+);
+
 create or replace function public.get_helper_generation_stats()
 returns table (
   id uuid,
@@ -131,6 +156,9 @@ create index if not exists idx_license_keys_generated_at on public.license_keys(
 create index if not exists idx_activations_license on public.activations(license_key_id);
 create index if not exists idx_audit_logs_actor on public.audit_logs(actor_type, actor_id);
 create index if not exists idx_audit_logs_created on public.audit_logs(created_at desc);
+create index if not exists idx_question_subjects_code on public.question_subjects(code);
+create index if not exists idx_question_bank_entries_subject on public.question_bank_entries(subject_id);
+create index if not exists idx_question_bank_entries_year on public.question_bank_entries(exam_year desc);
 
 create or replace function public.set_updated_at()
 returns trigger
@@ -154,12 +182,20 @@ before update on public.bot_sessions
 for each row
 execute function public.set_updated_at();
 
+drop trigger if exists question_subjects_set_updated_at on public.question_subjects;
+create trigger question_subjects_set_updated_at
+before update on public.question_subjects
+for each row
+execute function public.set_updated_at();
+
 alter table public.helpers enable row level security;
 alter table public.license_keys enable row level security;
 alter table public.activations enable row level security;
 alter table public.audit_logs enable row level security;
 alter table public.admin_settings enable row level security;
 alter table public.bot_sessions enable row level security;
+alter table public.question_subjects enable row level security;
+alter table public.question_bank_entries enable row level security;
 
 create policy "service_role_all_helpers"
 on public.helpers
@@ -198,6 +234,20 @@ with check (true);
 
 create policy "service_role_all_bot_sessions"
 on public.bot_sessions
+for all
+to service_role
+using (true)
+with check (true);
+
+create policy "service_role_all_question_subjects"
+on public.question_subjects
+for all
+to service_role
+using (true)
+with check (true);
+
+create policy "service_role_all_question_bank_entries"
+on public.question_bank_entries
 for all
 to service_role
 using (true)
